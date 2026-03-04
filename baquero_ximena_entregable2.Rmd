@@ -1,6 +1,6 @@
 ---
-title: "Entregable 2: Reproducibilidad - Vida de peces en acuarios"
-author: "Ximena Baquero Gonzalez"
+title: "Acuarios: La vida de los peces"
+author: "Baquero Gonzalez, Ximena"
 date: "`r Sys.Date()`"
 output: word_document
 editor_options: 
@@ -24,7 +24,8 @@ A continuacion vamos a hablar sobre las **condiciones de vida de peces en acuari
 ![Peces en acuario](images/peces.jpg)
 
 
-Se llevo a cabo un experimento para determinar si la **disponibilidad de nutrientes y la presencia de parasitos impactan en el peso del pez**. En la siguiente tabla se muestran los resultados:
+Se llevo a cabo un experimento para determinar si la **disponibilidad de nutrientes y la presencia de parasitos impactan en el peso del pez**. Se hara hincapie en enfermedades parasitarias, algunas tan conocidas como el Anisakis. 
+En la siguiente tabla se muestran los resultados:
 
 ```{r ish dataf,  include=FALSE}
 peces <- read.csv("Acuarios.csv")
@@ -36,10 +37,10 @@ knitr :: kable (
 )
 ```
 
-El peso medio por acuario fue 
+El peso medio de pez segun la disponibilidad de nutrientes fue 
 ```{r peso medio por acuario, include=TRUE}
 peces |> 
-  group_by(acuario) |>
+  group_by(nut) |>
   summarise(mean(pesopez))
 ```
 
@@ -47,11 +48,15 @@ En el siguiente grafico se aprecia la relacion entre el peso de cada pez segun e
 
 ```{r grafica, echo=FALSE}
 ggplot(peces,aes(x=paratiso, y=pesopez)) +
-  geom_point() +
-  geom_point(color="blue", size=2) +
-  labs(title="Peso de Pez (g) vs No. de parasitos")
+  # Barras
+  geom_col(fill = "red", color = "pink", width = 0.5) +
+  # Estética
+  theme_minimal() +
+  labs(title = "Peso de Pez (g) vs No. de parasitos",
+   y = "pesopez",
+       x = "parasito")
 ```
-Por lo que se puede ver en el grafico, **el numero de parasitos tienen poco impacto en el peso del pez.**
+Por lo que se puede ver en el grafico, **el peso maximo ocurre en peces con una media de 20 parasitos.**
 
 Sin embargo, se ha demostrado que las plantas son muy beneficiosas para la salud de los peces de acuario (Hossain et al. 2024).
 
@@ -69,4 +74,5 @@ Services, F. D. of A. and C. (n.d.). Aquarium Care and Maintenance: Aquatic Plan
 ## R Markdown
 
 This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
 
